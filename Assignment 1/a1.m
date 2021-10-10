@@ -3,7 +3,7 @@
 
 % -----------------------Question 1-----------------------
 
-img_color = imread('./images/eldenring.jpg');
+img_color = imresize(imread('./images/eldenring.jpg'), 0.25);
 
 img_grayscale = rgb2gray(img_color);
 imwrite(img_grayscale, './outputs/eldenring_grayscale.jpg');
@@ -11,15 +11,15 @@ imwrite(img_grayscale, './outputs/eldenring_grayscale.jpg');
 % Log Transformation
 
 a = double(img_grayscale)/255;
-c = 1;
+c = 2;
 img_log = c * log(1 + (a));
 imwrite(img_log, './outputs/eldenring_log_transform.jpg');
 
 % Inverse Log Transformation
 
-a = double(img_grayscale);
-c = 1;
-img_inverse_log = c * 1./log(a);
+a = double(img_grayscale)/255;
+c = 2;
+img_inverse_log = (exp(a) .^ (1/c)) - 1;
 imwrite(img_inverse_log, './outputs/eldenring_inverse_log_transform.jpg');
 
 % Power Law Transformation
@@ -30,8 +30,8 @@ c = 1;
 img_power_law_1 = c * (a .^ gamma);
 gamma = 3.0;
 img_power_law_2 = c * (a .^ gamma);
-imwrite(img_power_law_1, './outputs/eldenring_power_law_1.jpg');
-imwrite(img_power_law_2, './outputs/eldenring_power_law_2.jpg');
+imwrite(img_power_law_1, './outputs/eldenring_power_law_whiten.jpg');
+imwrite(img_power_law_2, './outputs/eldenring_power_law_blacken.jpg');
 
 % -----------------------Question 2-----------------------
 
@@ -53,7 +53,7 @@ img = bitset(img, 8, b8);
 imshow(img);
 %}
 
-imwrite(b7+b8, './outputs/eldenring_78.jpg');
+imwrite(b7*(2^6)+b8*(2^7), './outputs/eldenring_78.jpg');
 imwrite(b5+b6+b7+b8*255, './outputs/eldenring_5678.jpg');
 
 % -----------------------Question 3-----------------------
@@ -65,7 +65,7 @@ inverse_hist = histeq(img_inverse_log);
 
 figure
 imhist(img_grayscale, 64)
-%imhist(g_hist, 64)
+imhist(g_hist, 64)
 
 % -----------------------Question 4-----------------------
 
