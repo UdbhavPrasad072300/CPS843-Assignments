@@ -31,3 +31,7 @@ codegen/
 octave-workspace
 
 *.zip
+
+# Report Images ignored
+
+Assignment 1/LaTeX report/images/

@@ -58,28 +58,37 @@ imwrite(b5*(2^4) + b6*(2^5) + b7*(2^6) + b8*(2^7), './outputs/eldenring_5678.jpg
 
 % -----------------------Part 1 - Problem 3-----------------------
 
-g_hist = histeq(img_grayscale);
-log_hist = histeq(img_log);
-inverse_hist = histeq(img_inverse_log);
-%imshow(g_hist);
+g_hist = histeq(img_grayscale, 256);
+power_1_hist = histeq(img_power_law_1, 256);
+power_2_hist = histeq(img_power_law_2, 256);
 
-figure
-imhist(img_grayscale, 64)
-imhist(g_hist, 64)
+imhist(img_grayscale, 256);saveas(gcf,sprintf('./outputs/original_pre_hist.png'));
+imhist(g_hist, 256); saveas(gcf,sprintf('./outputs/original_post_hist.png'));
+
+imhist(img_power_law_1, 256); saveas(gcf,sprintf('./outputs/power_1_pre_hist.png'));
+imhist(power_1_hist, 256); saveas(gcf,sprintf('./outputs/power_1_post_hist.png'));
+
+imhist(img_power_law_2, 256); saveas(gcf,sprintf('./outputs/power_2_pre_hist.png'));
+imhist(power_2_hist); saveas(gcf,sprintf('./outputs/power_2_post_hist.png'));
 
 % -----------------------Part 1 - Problem 4-----------------------
 
-
+% No Code for this Question 
 
 % -----------------------Part 1 - Problem 5-----------------------
 
+before = [1 2 4 7 3 2 4 7 3 1 5 6 2 1 1 4 7 1 1 1]; 
+histogram(before, 8); saveas(gcf,sprintf('./outputs/manual_pre_hist.png'));
+
+after = [2 4 5 7 4; 4 5 7 4 2; 6 6 4 2 2; 5 7 2 2 2]; 
+histogram(after, 8); saveas(gcf,sprintf('./outputs/manual_post_hist.png'));
 
 % -----------------------Part 2 - Problem 1-----------------------
 
 a = 0.45;
 T = maketform('affine', [1 0 0; a 1 0; 0 0 1] );
 
-A = imresize(imread('images/eldenring_part2.jpg'), 0.25);
+A = imresize(imread('images/eldenring_part2.jpg'), [320, 256]);
 h1 = figure; imshow(A); title('Original Image');
 
 orange = [255 127 0]';
